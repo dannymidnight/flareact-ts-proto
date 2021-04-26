@@ -1,13 +1,24 @@
 import styled from "styled-components";
 
 const Title = styled.h1`
-  margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
-  text-align: center;
   color: red;
 `;
 
-export default function Index() {
-  return <Title>Hello Chris!</Title>;
+export async function getEdgeProps() {
+  const res = await fetch("https://randomuser.me/api", {});
+  const json = await res.json();
+
+  return {
+    props: {
+      name: json.results[0].name.first,
+    },
+  };
+}
+
+interface Props {
+  name: string;
+}
+
+export default function Index({ name }: Props) {
+  return <Title>Hello {name}!</Title>;
 }
